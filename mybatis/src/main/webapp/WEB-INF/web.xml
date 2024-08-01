@@ -39,4 +39,54 @@
     <servlet-name>MemberInsertController</servlet-name>
     <url-pattern>/insert.me</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>LoginController</display-name>
+    <servlet-name>LoginController</servlet-name>
+    <servlet-class>com.study.mybatis.member.controller.LoginController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoginController</servlet-name>
+    <url-pattern>/login.me</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>LogoutController</display-name>
+    <servlet-name>LogoutController</servlet-name>
+    <servlet-class>com.study.mybatis.member.controller.LogoutController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LogoutController</servlet-name>
+    <url-pattern>/logout.me</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>BoardListController</display-name>
+    <servlet-name>BoardListController</servlet-name>
+    <servlet-class>com.study.mybatis.board.controller.BoardListController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BoardListController</servlet-name>
+    <url-pattern>/list.bo</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SeorchController</display-name>
+    <servlet-name>SeorchController</servlet-name>
+    <servlet-class>com.study.mybatis.board.controller.SeorchController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SeorchController</servlet-name>
+    <url-pattern>/search.bo</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SearchController</display-name>
+    <servlet-name>SearchController</servlet-name>
+    <servlet-class>com.study.mybatis.board.controller.SearchController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SearchController</servlet-name>
+    <url-pattern>/search.bo</url-pattern>
+  </servlet-mapping>
 </web-app>

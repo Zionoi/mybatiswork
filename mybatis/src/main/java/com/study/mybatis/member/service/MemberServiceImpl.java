@@ -29,4 +29,14 @@ public class MemberServiceImpl implements MemberService{
 			return result;
 	}
 
+	@Override
+	public Member loginMember(Member m) {
+		SqlSession sqlSession = Template.getSqlSession(); //세션 얻어오기
+		Member loginUser = mDao.loginMember(sqlSession, m);
+		sqlSession.close();	//로그인작업 수행후 세션 종료
+		return loginUser;
+	}
+	
+	
+
 }
