@@ -6,12 +6,22 @@
   <mapper namespace="boardMapper">
   
   <resultMap type="Board" id="boardResultSet">
-  	<result column="board_no" property="boardNo"/>
-  	<result column="board_title" property="boardTitle"/>
-  	<result column="board_content" property="boardContent"/>
-  	<result column="board_writer" property="boardWriter"/>
-  	<result column="count" property="count"/>
-  	<result column="create_date" property="createDate"/>
+     <result column="board_no" property="boardNo"/>
+     <result column="board_title" property="boardTitle"/>
+     <result column="board_content" property="boardContent"/>
+     <result column="board_writer" property="boardWriter"/>
+     <result column="count" property="count"/>
+     <result column="create_date" property="createDate"/>
+  
+  
+  
+  </resultMap>
+  
+  <resultMap type="Reply" id="replyResultSet">
+     <result column="reply_no" property="replyNo"/>
+     <result column="reply_content" property="replyContent"/>
+     <result column="reply_writer" property="replyWriter"/>
+     <result column="create_date" property="createDate"/>
   
   
   
@@ -19,19 +29,123 @@
   
   
   
-  	<!--resultType : 객체가 아닌 자료 딱 하나만 가져올때  -->
- 	<select id="selectTotalRecord" resultType="_int">
- 		select count(*) 
- 			from board 
- 			where status='Y'
- 	</select>
+     <!--resultType : 객체가 아닌 자료 딱 하나만 가져올때  -->
+    <select id="selectTotalRecord" resultType="_int">
+       select count(*) 
+          from board 
+          where status='Y'
+    </select>
+    
   
-  	<select id="selectList" resultMap="boardResultSet">
-  		select *
-  			from board
-  			where status = 'Y'
-  			order by board_no desc
-  	
-  	</select>
+     <select id="selectList" resultMap="boardResultSet">
+        select *
+           from board
+           where status = 'Y'
+           order by board_no desc
+     
+     </select>
   
+     <select id="searchList" parameterType="hashmap" resultMap="boardResultSet">
+       select *
+       from board
+       where status = 'Y'
+       <if test= "keyField == 'writer'">
+           and board_writer like #{keyword}
+       </if>
+       <if test= "keyField == 'title'">
+           and BOARD_TITLE like #{keyword}
+       </if>
+       <if test= "keyField == 'content'">
+           and BOARD_CONTENT like #{keyword}
+       </if>
+       order by board_no desc
+   </select>    
+   <!-- 내가만든 검색된 게시글 리턴 쿼리 -->
+     <select id="searchTotalRecord" parameterType="hashmap" resultType="_int">
+       select count(*) 
+          from board
+       where status = 'Y'
+       <if test= "keyField == 'writer'">
+           and board_writer like #{keyword}
+       </if>
+       <if test= "keyField == 'title'">
+           and BOARD_TITLE like #{keyword}
+       </if>
+       <if test= "keyField == 'content'">
+           and BOARD_CONTENT like #{keyword}
+       </if>
+       order by board_no desc
+    </select>
+     
+        <!-- 교수님이 만든 검색된 게시글 갯수 리턴 쿼리 -->
+     <select id="selectSearchCount" parameterType="hashmap" resultType="_int">
+        select count(*)
+           from board
+           where status = 'Y'
+       <if test= "keyField == 'writer'">
+           and board_writer 
+       </if>
+       <if test= "keyField == 'title'">
+           and BOARD_TITLE
+       </if>
+       <if test= "keyField == 'content'">
+           and BOARD_CONTENT
+       </if>
+       like '%' || #{keyword} || '%'
+       
+     </select>
+     
+     <!-- 교수님이 만든 게시글 검색 쿼리 -->
+     <select id="selectSearchList" parameterType="hashmap" resultMap="boardResultSet">
+        select *
+           from board
+           where status = 'Y'
+        <choose>
+       <when test= "keyField == 'writer'">
+           and board_writer 
+       </when>
+       <when test= "keyField == 'title'">
+           and BOARD_TITLE 
+       </when>
+       <otherwise>
+           and BOARD_CONTENT 
+       </otherwise>
+       </choose>
+       like '%' || #{keyword} || '%'
+       order by board_no desc
+     </select>
+     
+     <update id="increaseCount">
+        update board
+           set count = count + 1
+           where board_no = #{boardNo}
+           and status = 'Y'
+     </update>
+     
+     <select id="selectboard" resultMap="boardResultSet">
+        select *
+           from board
+           where status = 'Y'
+           and board_no = #{boardNo}
+     
+     </select>
+     
+     
+     <select id="selectReplyList" resultMap="replyResultSet">
+        select *
+           from reply
+           where status = 'Y'
+           and
+           ref_bno=#{boardNo}
+           order by REPLY_NO desc
+     
+     </select>
+     
+     <insert id="insertReply" parameterType="Reply" >
+     	insert into reply(reply_no, reply_content, ref_bno, reply_writer, create_date, status)
+ 					values(seq_rno.nextval,#{replyContent},#{refBno},#{replyWriter},sysdate, default)
+     </insert>
+  
+     
+     
   </mapper>

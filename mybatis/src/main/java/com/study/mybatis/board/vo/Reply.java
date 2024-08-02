@@ -10,6 +10,14 @@ public class Reply {
 	public Reply() {
 		super();
 	}
+
+	public Reply(String replyWriter, int refBno, String replyContent) {
+		super();
+		this.replyWriter = replyWriter;
+		this.refBno = refBno;
+		this.replyContent = replyContent;
+	}
+	
 	public Reply(int replyNo, String replyContent, int refBno, String replyWriter, String createDate, String status) {
 		super();
 		this.replyNo = replyNo;

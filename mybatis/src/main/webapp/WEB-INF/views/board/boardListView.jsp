@@ -23,28 +23,104 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="b" items="${list }">
+			
+				<c:forEach var="b" items="${list }" varStatus="s">
 					<tr>
-						<td>${b.boardNo }</td>
-						<td>${b.boardTitle }</td>
+						<td>${pi.totalRecord-((pi.nowPage-1)*pi.numPerPage)-s.index }</td>
+						<%-- <td>${b.boardNo }</td> --%>
+						<td><a href="detail.bo?boardNo=${b.boardNo }">
+								${b.boardTitle }</a></td>
 						<td>${b.boardWriter }</td>
 						<td>${b.count }</td>
 						<td>${b.createDate.substring(0,10) }</td>
 					</tr>
 				</c:forEach>
 			</tbody>
+			
+<%-- 			<c:choose>
+            <c:when test="${list == null}">
+                <c:forEach var="b" items="${list}">
+                    <tr>
+                        <td>${b.boardNo}</td>
+                        <td>${b.boardTitle}</td>
+                        <td>${b.boardWriter}</td>
+                        <td>${b.count}</td>
+                        <td>${b.createDate.substring(0, 10)}</td>
+                    </tr>
+                </c:forEach>
+            </c:when>
+            <c:otherwise>
+                <c:forEach var="b" items="${list}">
+                    <tr>
+                        <td>${b.boardNo}</td>
+                        <td>${b.boardTitle}</td>
+                        <td>${b.boardWriter}</td>
+                        <td>${b.count}</td>
+                        <td>${b.createDate.substring(0, 10)}</td>
+                    </tr>
+                </c:forEach>
+            </c:otherwise>
+        </c:choose> --%>
 		</table>
 		
-		<div align="center">
+		<div align="center" id="paging-area">
 			<c:if test="${ pi.nowPage ne 1 }">
-				<a href="list.bo?nowPage=${ pi.nowPage - 1 }">[이전]</a>
+				<c:choose>
+					<c:when test="${keyword == null }">
+							<a href="list.bo?nowPage=${ pi.nowPage - 1 }">[이전]</a>
+					</c:when>
+					<c:otherwise>
+							<a href="search.bo?nowPage=${ pi.nowPage - 1 }&keyField=${keyField}&keyword=${keyword}">[이전]</a>
+					</c:otherwise>
+				</c:choose>						
 			</c:if>
-			<c:forEach var="p" begin="${ pi.startPage }" end = "${pi.endPage }">
-				<a href="list.bo?nowPage=${p }">[${p }]</a>
-			</c:forEach>
-			<c:if test="${pi.nowPage ne pi.totalPage }">
-				<a href="list.bo?nowPage=${pi.nowPage + 1 }">[다음]</a>
-			</c:if>
+				<c:choose>
+					<c:when test="${keyword == null }">
+						<c:forEach var="p" begin="${ pi.startPage }" end = "${pi.endPage }">
+							<a href="list.bo?nowPage=${p }">[${p }]</a>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="p" begin="${ pi.startPage }" end = "${pi.endPage }">
+							<a href="search.bo?nowPage=${p }&keyField=${keyField}&keyword=${keyword}">[${p }]</a>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>		
+					
+				<c:if test="${pi.nowPage ne pi.totalPage }">
+					<c:choose>
+						<c:when test="${keyword ==null }">
+							<a href="list.bo?nowPage=${pi.nowPage + 1 }">[다음]</a>
+						</c:when>
+						<c:otherwise>
+							<a href="search.bo?nowPage=${pi.nowPage + 1 }&keyField=${keyField}&keyword=${keyword}">[다음]</a>
+						</c:otherwise>
+							
+					</c:choose>		
+				</c:if>
+				
+					
+				
+					<%-- <c:otherwise>
+					<c:if test="${ pi.nowPage ne 1 }">
+							<a href="search.bo?nowPage=${ pi.nowPage - 1 }&keyField=${keyField }&keyword=${keyword}">[이전]</a>
+						</c:if>
+						<c:forEach var="p" begin="${ pi.startPage }" end = "${pi.endPage }">
+							<c:choose>
+								<c:when test="${p eq pi.nowPage}">
+									<a href="search.bo?nowPage=${p }" style="color:hotpink">[${p }]</a>
+								 </c:when>
+								<c:otherwise>
+									<a href="search.bo?nowPage=${p }">[${p }]</a>
+								</c:choose>
+							</c:choose>
+							<a href="search.bo?nowPage=${p }&keyField=${keyField }&keyword=${keyword}">[${p }]</a>
+						</c:forEach>
+						<c:if test="${pi.nowPage ne pi.totalPage }">
+							<a href="search.bo?nowPage=${pi.nowPage + 1 }&keyField=${keyField }&keyword=${keyword}">[다음]</a>
+						</c:if>
+				</c:otherwise>
+			</c:choose> --%>
 		</div>
 		
 		<div align="center">
@@ -54,9 +130,9 @@
 					<option value="title">제목</option>
 					<option value="content">내용</option>
 				</select>
-				<input name="keyword" >
+				<input name="keyword" value="${keyword }">
 				<button>검색</button>
-				<input type="hidden" name="nowPage" value="${ pi.nowPage}">
+				<input type="hidden" name="nowPage" value="1">
 			</form>
 		
 		</div>

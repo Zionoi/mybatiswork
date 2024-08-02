@@ -75,10 +75,6 @@
     <servlet-name>SeorchController</servlet-name>
     <servlet-class>com.study.mybatis.board.controller.SeorchController</servlet-class>
   </servlet>
-  <servlet-mapping>
-    <servlet-name>SeorchController</servlet-name>
-    <url-pattern>/search.bo</url-pattern>
-  </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>SearchController</display-name>
@@ -88,5 +84,35 @@
   <servlet-mapping>
     <servlet-name>SearchController</servlet-name>
     <url-pattern>/search.bo</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>BoardDetailController</display-name>
+    <servlet-name>BoardDetailController</servlet-name>
+    <servlet-class>com.study.mybatis.board.controller.BoardDetailController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BoardDetailController</servlet-name>
+    <url-pattern>/detail.bo</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>InsertReplyController</display-name>
+    <servlet-name>InsertReplyController</servlet-name>
+    <servlet-class>com.study.mybatis.board.controller.InsertReplyController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>InsertReplyController</servlet-name>
+    <url-pattern>/reply.re</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetRepliesController</display-name>
+    <servlet-name>GetRepliesController</servlet-name>
+    <servlet-class>com.study.mybatis.board.controller.GetRepliesController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetRepliesController</servlet-name>
+    <url-pattern>/getReplies.bo</url-pattern>
   </servlet-mapping>
 </web-app>

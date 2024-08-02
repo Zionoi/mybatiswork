@@ -16,6 +16,7 @@
  	<typeAliases>
  		<typeAlias type="com.study.mybatis.member.vo.Member" alias="Member"/>
  		<typeAlias type="com.study.mybatis.board.vo.Board" alias="Board"/>
+ 		<typeAlias type="com.study.mybatis.board.vo.Reply" alias="Reply"/>
  		
  	</typeAliases>
  	
