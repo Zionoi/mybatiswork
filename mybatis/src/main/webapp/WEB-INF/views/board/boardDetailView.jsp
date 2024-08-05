@@ -95,6 +95,8 @@
 $(document).ready(function() {
     $("#reBtn").click(function(event) {
         event.preventDefault(); // 폼의 기본 제출을 방지
+        						// .serialize() : form안의 input, select, textarea의 value값을 간단하게 표준 url인코딩 형태의 문자열로 만들어줌
+        						//				ex) content=내용&bnum=2&userId=user02
         var formData = $("#replyForm").serialize();
         $.ajax({
             type: "POST",
